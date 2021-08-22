@@ -1,30 +1,7 @@
-"""This is a script/code (?) to ensure I complete the minimum activities per day that I would like to have been done.
-This shouldn't be final until the date 2021/01/01 (at least the none-decoration bits) since I'd like to use it on a yearly basis.
-
-    FEATURES:
-        + Dynamic To-Dos
-        + A randomly generated design
-        + A nice logo on the top, perhaps pixel art or ascii art
-        + Dates at the top in the descending order: ISO, Gregorian, Judeo-Muslim, the one from Revolutionary France
-            in tuple format
-        + A Piechart.
-        + A YES,yes, NO counter. Chains and everything
-        
-    THINGS:
-s where s is equal to seconds unless otherwise stated,
-m where m is equal to minutes unless otherwise stated.
-SR = Spaced Repetition, Cr = Courses, Ls = Listening, Sp = Speaking, Rd = Reading, Wr = Writing
-Nf = Non-fiction, Fi = Fiction, Po = Poetry, Sh = Short stories, Bi = Biography
-Em = Emails, Si = Site, Sc = Scientific paper 
-Em = Emision (Sqhip for (TV) Show), Mo = Movies, YT = YouTube, Gm = Gaymes, Tt = Tabletops, 
-Es = Essay, Cv = Conversation, Le = Lecture, Dc = Doc, Tu = Tutorial,
-
-Calendar: ISO 8601,
-"""
-
 ### IMPORTS ###
 from random import randint
 import datetime
+from hijri_converter import Hijri
 
 media_obj = """
 —————————  Mediums
@@ -58,7 +35,7 @@ media_obj = """
 - Chess24  :  Rapid score [ ]  
 - Lichess  :  Rapid score [1578]  
 """
-#Use the kabir category as your projects that can have tasks in them#
+
 plan_obj ="""
 —————————  Plan
 ——————	Ehi's has beans
@@ -196,6 +173,12 @@ Wear Pant set C.
 Book: Read: Epistorical[i]: 1 chapter or 10 pages.
 Book: Read: Epistorical[ii]: 1 chapter or 10 pages.
 
+Voice: Talk to birds.
+Voice: Tongue & pitch exercises.
+Voice: Speech practice.
+Voice: Recite the first 12 ayaat of Surah Ya-seen.
+Voice: Repeat that paragraph by Sir Humphrey of Yes, Minister.
+
 Attempt memorization of oral[i]
 Watch: That Albanian show. (1 ep.)
 
@@ -314,6 +297,16 @@ _: Export any pictures taken during the trip to the Google Drive.
 from datetime import datetime, timedelta
 
 def read_sequence(title):
+    """Searches for the correct file and returns True or False depending on success or failure.
+    
+     Parameters
+     ----------
+     title: str
+        The name of the file as instructed by the current date.
+     Returns
+     -------   
+     Boolean
+    """
     print("Reading today's daily...")
     try:
         with open(title, mode='rt', encoding='utf-8') as r:
@@ -324,52 +317,67 @@ def read_sequence(title):
         return False
 
 
-def write_sequence(title, sessions, dates):
+def write_sequence(title, date, date_obj):
+    """ This writes the daily by using a for loop to write out the sections and ensure they are divided by a long divider.
 
+    Parameters
+    ------
+    title: str
+        What the daily will be called in the end.
+    dates: list
+        A list of dates by different calendrical systems in alphabetical order.
+        
+            CS_chinese = 1
+            CS_french_revolutionary = 2
+            CS_gregorian = 3
+            CS_hijri = 4
+            CS_jalali = 5
+            CS_judean = 6
+            CS_julian = 7
+            CS_rumi = 8
+
+    dvdr: str
+        A string literal made up of new lines, dashes, and plusses.
+    box: list
+        A list that determines the order of what will be written out.
+    """
     try:
         print('Opening Connection now...')
         w = open(title, 'wt', encoding='utf-8')
         
         print("Creating today's daily...")
         dvdr = "\n------------------------------------ + ------------------------------------ + ------------------------------------ + ------------------------------------\n"
-        box = ['words', 'actions', media_obj, plan_obj, 'thoughts', 'rules']
-        
+        box = ['words', 'dates', media_obj, plan_obj, 'thoughts', 'rules']
+
         for item in box:
-            w.write(dvdr)
             
             if item == 'dates':
-                # As soon as you add a proper date list, then edit this one.
+                w.writelines(["\n\n—————————  DATE \n"])
+                w.writelines(['- In the Gregorian calendar: ', date_obj[2], '\n'])
+                w.writelines(['- In the Hijri calendar: ', date_obj[3], '\n'])
+                w.writelines(['- In the ISO-8601 calendar: ', date_obj[4], ' CE', '\n'])       
+
                 continue
-            
-                w.writelines(["\nDATE: \n"])
-                for i in dates:
+                # REMOVE ABOVE CONTINUE ONCE ALL DATES HAVE BEEN ADDED.
+                
+                for i in date_obj:
                     w.write('\n')
                     w.writelines(i)
                     w.write('\n')
                     print(f'The date by this calendar is {i}')
                 
                 continue
-                
-            if item == 'actions':
-                w.writelines(['\nDAILY (',str(len(sessions)),') :  \n',])
-                for tuples in sorted(sessions):
-                    name, extra, minimum = tuples
-                    
-                    w.writelines(f' {name}: {extra} 0/{minimum}m\n')
-                    print(f'{name}: {extra} 0/{minimum}m')
-                    
-                continue
+
             if item == 'thoughts':
-                w.writelines(['\n — Thoughts and Things for the date of ',str(dates), ' —  \n \n'])
+                w.writelines(['\n — Thoughts and Things for the date of ',str(date), ' —  \n \n'])
                 continue
-                
-            # if we could refactor these items, that would be great
+
             if item == 'rules':
-                w.writelines([rules_obj[0], rules_obj[randint(1,len(rules_obj)-1)]])
+                w.writelines([ rules_obj[0], rules_obj[randint(1, len(rules_obj) - 1)] ])
                 continue
             
             if item == 'words':
-                w.writelines([quotes_obj[0], '\n', quotes_obj[randint(1, len(quotes_obj)-1)], '\n'])
+                w.writelines([ quotes_obj[0], quotes_obj[randint(1, len(quotes_obj) - 1)] ])
                 continue
                 
             w.writelines(item)
@@ -382,29 +390,54 @@ def write_sequence(title, sessions, dates):
 
 
 def main():
-    session_list = [
-        ( 'Language-learning', '( Sr m + Cr m + Lp m + Sp m + Rd m + Wr m )', 90 ),
-        ( 'Planning', '' , 30 ),
-        ( 'Sunlight','',15 ),
-    ]
+    """
+    The main function which iniates the processes to create a notepad daily.
 
-    date_judean = ''
-    date_islamic = ''
-    date_gregorian = ''
-    date_chinese = ''
-    date_revolutionary = ''
+    Parameters
+    ---------
+        CS_chinese : str
+        CS_french_revolutionary : str
+        CS_gregorian : str
+        CS_hijri : str
+        CS_ISO_8601 : str
+        CS_jalali : str
+        CS_judean : str
+        CS_julian : str
+        CS_rumi : str
+            All the dates except ISO must be in DDDD dd of MMMM, mm of yyyy AH/CE/etc.
+            ISO_8601 has no month so it must be in yyyy-ww-dd
 
-    Today = '-'.join(map(str,datetime.now().isocalendar()))
-    Tomorrow = '-'.join(map(str,(datetime.now() + timedelta(days=1)).isocalendar()))
+        dates_obj: list
+            incorporates all the results from the above calendrical systems.
 
-    title = '.'.join([Today,'txt'])
+    """
 
-    if not read_sequence(title):
+    # Improper application, I need it to be using the a date variable which will be determined by the read sequence failure or success.
+
+    L_ah = Hijri.today()
+    S_ah = ''
+
+    CS_chinese = ''
+    CS_french_revolutionary = ''
+    CS_gregorian = datetime.now().date().strftime('%A %B %Y-%m-%d AD')
+    CS_hijri = ' '.join([L_ah.day_name(), L_ah.month_name(), L_ah.isoformat(), L_ah.notation()])
+    CS_ISO_8601 = ' '.join(['-'.join(map( str, datetime.now().isocalendar())), 'CE'])
+    CS_jalali = ''
+    CS_judean = ''
+    CS_julian = ''
+    CS_rumi = ''
+    
+    date_obj = [CS_chinese, CS_french_revolutionary, CS_gregorian, CS_hijri, CS_ISO_8601, CS_jalali, CS_judean, CS_julian, CS_rumi]
+
+    Today = datetime.now().date().isoformat()
+    Tomorrow = (datetime.now().date()+ timedelta(days=1)).isoformat()
+
+    if not read_sequence('.'.join([Today, 'txt'])):
         print("Creating today's daily...")
-        write_sequence(title, session_list, Today)
+        write_sequence('.'.join([Today, 'txt']), Today, date_obj)
     else:
-        print("creating tomorrow's title")
-        write_sequence('.'.join([Tomorrow,'txt']), session_list, Tomorrow)
+        print("Creating tomorrow's daily...")
+        write_sequence('.'.join([Tomorrow, 'txt']), Tomorrow, date_obj)
 
     
 saying_01 = " 'Take everything in moderation including moderation.' - Oscar Wilde "
