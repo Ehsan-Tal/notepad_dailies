@@ -5,8 +5,11 @@
  
 # Usage
  Simply run it either in console, with a double click, or however you can run the script.
+ 
  It will then produce a .txt file with its corresponding – currently – Gregorian date.
+ 
  You can then functionalise your activties, track whether you have done those activities, or your progress on the books, shows, or whatever else.
+ 
  Although, most default things will necessitate right-clicking or editing the script since I have not yet introduced an alternative.
 
 # Future changes
