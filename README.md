@@ -18,3 +18,5 @@
  
  A summary word to describe any special event or primary activity to aid in discrimination.
 
+ Perhaps for the hijri dates, one full right-left, the next full left-right
+

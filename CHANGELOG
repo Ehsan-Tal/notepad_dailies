@@ -7,13 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unrealeased]
 ### Added
 - Support for the Jalali Calendar
+- Support for the Julian Calendar
 - Support for the Rumi Calendar
-- Support for the Hebrew Calendar
 - Support for the Chinese Calendar
-- Support for the French Revolutionary Calendar
+
+### Changed
+
+### Fixed
+- The problem of right to left and left to right things. 
+### Removed
+
+## [0.0.3] - 2021-08-23 'Judea dhe Jacobin dhe Hijri'
+### Added
+- Support for the Judean Calendar
+- Support for the Jacobin Calendar
+- Support for today/tomorrow functionality
 
 ### Changed
 - Changed the date_obj to a dictionary
+- Changed the French Revolutionary Calendar to the Jacobin Calendar
+- Extracted the date_obj variables and calculations into their separate function
+- Changed Hijri Calendar to Qamari Hijri – I would rather shamshi hijri than jalali
+
+### Fixed
+- Refined documentation in places
+- To some degree, the right-left and left-right dilema
+
+### Removed
+- The dvdr as it was not very pleasing to the eye
 
 ## [0.0.2] - 2021-08-22 'Dates and cleaning'
 ### Added

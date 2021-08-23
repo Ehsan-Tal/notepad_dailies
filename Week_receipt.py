@@ -1,7 +1,9 @@
 ### IMPORTS ###
 from random import randint
-import datetime
-from hijri_converter import Hijri
+from datetime import datetime, timedelta
+from hijri_converter import Hijri, Gregorian
+from pyluach import dates, hebrewcal
+from repubcal import repubcal
 
 media_obj = """
 —————————  Mediums
@@ -293,9 +295,6 @@ _: Export any pictures taken during the trip to the Google Drive.
 """
 
 ### FUNCTIONS ###
-
-from datetime import datetime, timedelta
-
 def read_sequence(title):
     """Searches for the correct file and returns True or False depending on success or failure.
     
@@ -303,8 +302,9 @@ def read_sequence(title):
      ----------
      title: str
         The name of the file as instructed by the current date.
+
      Returns
-     -------   
+     ---------- 
      Boolean
     """
     print("Reading today's daily...")
@@ -321,24 +321,14 @@ def write_sequence(title, date, date_obj):
     """ This writes the daily by using a for loop to write out the sections and ensure they are divided by a long divider.
 
     Parameters
-    ------
+    ----------
     title: str
         What the daily will be called in the end.
-    dates: list
-        A list of dates by different calendrical systems in alphabetical order.
-        
-            CS_chinese = 1
-            CS_french_revolutionary = 2
-            CS_gregorian = 3
-            CS_hijri = 4
-            CS_jalali = 5
-            CS_judean = 6
-            CS_julian = 7
-            CS_rumi = 8
-
-    dvdr: str
-        A string literal made up of new lines, dashes, and plusses.
-    box: list
+    dates: str
+        Gregorian date in ISO format
+    date_obj: dict
+        A collection of dates
+     box: list
         A list that determines the order of what will be written out.
     """
     try:
@@ -346,19 +336,21 @@ def write_sequence(title, date, date_obj):
         w = open(title, 'wt', encoding='utf-8')
         
         print("Creating today's daily...")
-        dvdr = "\n------------------------------------ + ------------------------------------ + ------------------------------------ + ------------------------------------\n"
         box = ['words', 'dates', media_obj, plan_obj, 'thoughts', 'rules']
 
         for item in box:
             
             if item == 'dates':
                 w.writelines(["\n\n—————————  DATE \n"])
-                w.writelines(['- In the Gregorian calendar: ', date_obj[2], '\n'])
-                w.writelines(['- In the Hijri calendar: ', date_obj[3], '\n'])
-                w.writelines(['- In the ISO-8601 calendar: ', date_obj[4], ' CE', '\n'])       
-
+                w.writelines(['- In the Gregorian calendar: ', date_obj['Gregorian'], '\n'])
+                w.writelines(['- In the Qamari Hijri calendar: ', date_obj['Hijri'], '\n'])
+                w.writelines(['- In the ISO-8601 calendar: ', date_obj['ISO-8601'], '\n'])       
+                w.writelines(['- In the Jacobin calendar: ', date_obj['Jacobin'], '\n'])
+                w.writelines(['- In the Judean calendar: ', date_obj['Judean'], '\n'])
+                                
                 continue
                 # REMOVE ABOVE CONTINUE ONCE ALL DATES HAVE BEEN ADDED.
+                #
                 
                 for i in date_obj:
                     w.write('\n')
@@ -382,12 +374,51 @@ def write_sequence(title, date, date_obj):
                 
             w.writelines(item)
         
-        w.write(dvdr)
-        
     finally:
         print("Closing connection now...")
         w.close()
 
+
+def get_dates(date):
+    """
+    The point of this function is to return all the dates
+
+    Parameters
+    ---------
+        date: int/datetime
+            the input date received from from the main function
+        CS_chinese, CS_gregorian, CS_hijri, CS_ISO_8601, CS_jacobin, CS_jalali, CS_judean, CS_julian, CS_rumi : str
+       
+        dates_obj: dict
+        
+    Returns
+    ---------
+        dates_obj: dict
+    """
+
+    # ADD SUPPORT FOR: jalali, julian
+    L_ah = Gregorian.fromisoformat(date).to_hijri()
+    Heb = dates.HebrewDate.from_pydate(datetime.fromisoformat(date))
+    S_ah = ''
+   
+    CS_chinese = ''
+    CS_gregorian = datetime.fromisoformat(date).strftime('%A %B %Y-%m-%d AD')
+    CS_hijri = ' '.join([L_ah.day_name('ar'), L_ah.day_name(), L_ah.month_name('ar'), L_ah.month_name(), ('-'.join([str(L_ah.year), str(L_ah.month), str(L_ah.day)])) ,  L_ah.notation('ar'), L_ah.notation()])
+    CS_ISO_8601 = ' '.join(['-'.join(map( str, datetime.fromisoformat(date).isocalendar())), 'CE'])
+    CS_jacobin = repubcal.RDate.fromisoformat(date).revol_strftime('%rf %rA %rB %rY %ry-%rm-%rd')
+    CS_jalali = ''
+    CS_judean = ' '.join( [Heb.month_name(True), Heb.month_name(), ('-'.join([str(Heb.year), str(Heb.month), str(Heb.day)]))])
+    CS_julian = ''
+    CS_rumi = ''
+    
+    # CHANGE THIS TO DICT
+    dates_obj = {
+                'Chinese': CS_chinese, 'Gregorian': CS_gregorian, 'Hijri': CS_hijri, 
+                'ISO-8601':  CS_ISO_8601, 'Jacobin': CS_jacobin, 'Jalali': CS_jalali,
+                'Judean': CS_judean, 'Julian': CS_julian, 'Rumi': CS_rumi
+                }
+
+    return dates_obj
 
 def main():
     """
@@ -395,49 +426,25 @@ def main():
 
     Parameters
     ---------
-        CS_chinese : str
-        CS_french_revolutionary : str
-        CS_gregorian : str
-        CS_hijri : str
-        CS_ISO_8601 : str
-        CS_jalali : str
-        CS_judean : str
-        CS_julian : str
-        CS_rumi : str
-            All the dates except ISO must be in DDDD dd of MMMM, mm of yyyy AH/CE/etc.
-            ISO_8601 has no month so it must be in yyyy-ww-dd
-
+        CS_chinese, CS_gregorian, CS_hijri, CS_ISO_8601, CS_jacobin, CS_jalali, CS_judean, CS_julian, CS_rumi : str
         dates_obj: list
             incorporates all the results from the above calendrical systems.
+        Today: str
+            The date today in ISO format
+        Tomorrow: str
+            The date tomorrow ISO format
 
     """
-
-    # Improper application, I need it to be using the a date variable which will be determined by the read sequence failure or success.
-
-    L_ah = Hijri.today()
-    S_ah = ''
-
-    CS_chinese = ''
-    CS_french_revolutionary = ''
-    CS_gregorian = datetime.now().date().strftime('%A %B %Y-%m-%d AD')
-    CS_hijri = ' '.join([L_ah.day_name(), L_ah.month_name(), L_ah.isoformat(), L_ah.notation()])
-    CS_ISO_8601 = ' '.join(['-'.join(map( str, datetime.now().isocalendar())), 'CE'])
-    CS_jalali = ''
-    CS_judean = ''
-    CS_julian = ''
-    CS_rumi = ''
-    
-    date_obj = [CS_chinese, CS_french_revolutionary, CS_gregorian, CS_hijri, CS_ISO_8601, CS_jalali, CS_judean, CS_julian, CS_rumi]
 
     Today = datetime.now().date().isoformat()
     Tomorrow = (datetime.now().date()+ timedelta(days=1)).isoformat()
 
     if not read_sequence('.'.join([Today, 'txt'])):
         print("Creating today's daily...")
-        write_sequence('.'.join([Today, 'txt']), Today, date_obj)
+        write_sequence('.'.join([Today, 'txt']), Today, get_dates(Today))
     else:
         print("Creating tomorrow's daily...")
-        write_sequence('.'.join([Tomorrow, 'txt']), Tomorrow, date_obj)
+        write_sequence('.'.join([Tomorrow, 'txt']), Tomorrow, get_dates(Tomorrow))
 
     
 saying_01 = " 'Take everything in moderation including moderation.' - Oscar Wilde "
