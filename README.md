@@ -15,4 +15,6 @@
  I would also like an option when deciding which activities to do – i.e., which groups will be printed, e.g., Voice or Albanian or Auto_Invoice, etc. – for whichever day it belongs to, so that I do not have to worry or delete them manually, and it would add conformity.
 
  Those methods and sayings removed to a different file.
+ 
+ A summary word to describe any special event or primary activity to aid in discrimination.
 
