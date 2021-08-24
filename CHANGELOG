@@ -8,14 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for the Jalali Calendar
 - Support for the Julian Calendar
-- Support for the Rumi Calendar
-- Support for the Chinese Calendar
+
 
 ### Changed
 
 ### Fixed
 - The problem of right to left and left to right things. 
+
 ### Removed
+
+## [0.0.4] - 2021-08-24 'Chinese and Rumi-removal'
+### Added
+- Support for the Chinese Calendar
+- Separate file for my personal texts, so each book-progress-update does not warrant a commit
+- Support for the chinese zodiac system by adding a function from Codewars that was more refined than the one I came up with
+- Some mention of dependendcies
+
+### Changed
+- The input of the get_dates function is no longer a string, but of type datetime
+- Minor adjustments to the README to better suit the current predicament
+
+### Removed
+- Removed the Rumi Calendar from the objectives of this program.
 
 ## [0.0.3] - 2021-08-23 'Judea dhe Jacobin dhe Hijri'
 ### Added

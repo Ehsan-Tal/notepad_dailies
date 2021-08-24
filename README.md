@@ -1,5 +1,5 @@
 # NotePadDailies
- A day-based task tracker that works with text files and a python script.
+ A day-based productivity & task tracker that works with text files and a python script.
 
  My vision for this is a receipt for the everyday activities, progress, and assessments.
  
@@ -26,12 +26,18 @@
 
  I would also like an option when deciding which activities to do – i.e., which groups will be printed, e.g., Voice or Albanian or Auto_Invoice, etc. – for whichever day it belongs to, so that I do not have to worry or delete them manually, and it would add conformity.
 
- Those methods and sayings extracted to a different file.
- 
  A summary word to describe any special event or primary activity to aid in discrimination.
 
  Perhaps for the hijri dates, one full right-left, the next full left-right
  
  # Known Issues
   Right-to-left scripts interacting with left-to-right scripts on the same line.
+
+# Dependencies
+ ephem
+ Jacobin Calendar System from: repubcal – https://github.com/Nimlar/repubcal
+ Hijri Calendar System from: hijri_converter - https://github.com/dralshehri/hijri-converter
+ Judean Calendar System from: pyluach - https://github.com/simlist/pyluach
+ Yin Calendar System from: lunarcalendar - https://github.com/wolfhong/LunarCalendar
+ 
 
