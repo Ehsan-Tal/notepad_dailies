@@ -2,7 +2,7 @@
 from random import randint
 from datetime import datetime, timedelta
 from hijri_converter import Hijri, Gregorian
-from pyluach import dates, hebrewcal
+from pyluach import dates
 from repubcal import repubcal
 
 media_obj = """
@@ -14,14 +14,11 @@ media_obj = """
 - Surah Yaseen
 
 ——— Academical
-- CS 2203
+-
  
 ——— Epistorical
 - StashAway's_YPFP  : ( c.2 | p.30 | para.0 )
-- Memoirs_Napolean  : ( b.2 | c.22 | p.683 | para.0 ) 
-
-- D.fund
-- D.sign
+- Memoirs_Napolean  : ( b.2 | c.25 | p.653  | para.0 ) 
 
 - EIE.: ( lesson.1 | c.1 | u.1 ) [Web Only]
 - AL.P: ( c.1 | p.047 | para.0 ) [SPL only] {252}
