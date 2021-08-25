@@ -240,7 +240,7 @@ def write_sequence(date, date_obj):
                 w.writelines(["\n\n—————————  Dates \n"])
                 w.writelines(['- In the Gregorian calendar: ', date_obj['Gregorian'], '\n'])
                 w.writelines(['- In the Qamari Hijri calendar: ', date_obj['Hijri'], '\n'])
-                w.writelines(['- In the Shamshi Hijri calendar: ', date_obj['Jalali'], '\n'])
+                w.writelines(['- In the Shamsi Hijri calendar: ', date_obj['Jalali'], '\n'])
                 w.writelines(['- In the ISO-8601 calendar: ', date_obj['ISO-8601'], '\n'])       
                 w.writelines(['- In the Jacobin calendar: ', date_obj['Jacobin'], '\n'])
                 w.writelines(['- In the Judean calendar: ', date_obj['Judean'], '\n'])
