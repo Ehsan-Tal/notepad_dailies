@@ -6,16 +6,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrealeased]
 ### Added
-- Support for the Jalali Calendar
-- Support for the Julian Calendar
-
 
 ### Changed
 
 ### Fixed
-- The problem of right to left and left to right things. 
 
 ### Removed
+
+## [0.0.5] - 2021-08-24 '(Mostly) Done with Dates !'
+### Added
+- Support for the Jalali Calendar
+- Function to support changing Arabic numerals to Arabic numbers
+- Documentation for the chinese_zodiac function.
+- Traditional and Pinyin representations of the Chinese Zodiac
+
+### Changed
+- Formatting regarding the placement of, e.g., Arabic and English in the form Eng | Arb.
+
+### Fixed
+- The problem of right to left and left to right things by separating them by '|'
+
+### Removed
+- Mention of the Julian Calendar
 
 ## [0.0.4] - 2021-08-24 'Chinese and Rumi-removal'
 ### Added

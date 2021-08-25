@@ -28,10 +28,9 @@
 
  A summary word to describe any special event or primary activity to aid in discrimination.
 
- Perhaps for the hijri dates, one full right-left, the next full left-right
+ A system to standardise the Chinese Zodiac functions to an even greater extent by having the base calculations be in their own function, and each dictionary to be mapped with numbers instead of the English translation.
  
  # Known Issues
-  Right-to-left scripts interacting with left-to-right scripts on the same line.
 
 # Dependencies
  ephem
@@ -39,5 +38,6 @@
  Hijri Calendar System from: hijri_converter - https://github.com/dralshehri/hijri-converter
  Judean Calendar System from: pyluach - https://github.com/simlist/pyluach
  Yin Calendar System from: lunarcalendar - https://github.com/wolfhong/LunarCalendar
+ Jalali Calendar System from: khayyam - https://github.com/pylover/khayyam
  
 
