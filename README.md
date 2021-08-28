@@ -17,7 +17,11 @@
  
  A system where I can click or otherwise specify if tomorrow will be an 'exercise day' or one of university work, etc. 
  This is to reduce fluff that may obscure my focus on what I am to do that day.
-
+ 
+ Java and Python integration, so that I can use what I have already coded in python, but use Java for GUIs and everything else.
+ 
+ A system to track my 'current fascination' or activity in a beautiful, neat, and iterable way.
+ 
  I would also like to make it easier to add quotes, mores, and little packets of "wisdom" at the top, perhaps by using a csv or text file.
 
  I will theme each version, so that I do not make many changes to the calendar systems and perhaps be satisfied with the work I accomplish rather than chase castles in the sky.
