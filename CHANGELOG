@@ -6,12 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unrealeased]
 ### Added
+-[virtues] Added a text file for it.
+-[virtues] Added database functionality.
+-[virtues] Created a randomised 5 year series of entries to exercise pandas.
+-[virtues] Created a decent HTML front-end with foreign CSS.
+- Created an ini file to catalogue methods, sayings, etc.
 
 ### Changed
+- Separated all services - date, task, virtue, builder, front-end - into mico-components.
+- Separated the quotes, rules, and task & virtue texts into their own files.
 
 ### Fixed
 
 ### Removed
+- Much of the bulk of the task tracker
 
 ## [0.0.5] - 2021-08-24 '(Mostly) Done with Dates !'
 ### Added
